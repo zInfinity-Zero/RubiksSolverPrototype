@@ -46,7 +46,7 @@ namespace BAIProto
         protected override void LoadContent()
         {
             a = Content.Load<SpriteFont>("File");
-            solvetext = new TextManager(a, solvingstep, new Vector2(1000, 75), Color.Black);
+            solvetext = new TextManager(a, solvingstep, new Vector2(700, 75), Color.Black);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             tex = Content.Load<Texture2D>("rubik");
@@ -150,12 +150,12 @@ namespace BAIProto
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
             {
-                cube.XTurn();
+                cube.Turn(1);
                 Thread.Sleep(100);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D2))
             {
-                cube.Turn(6);
+                cube.Turn(2);
                 Thread.Sleep(100);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D3))
@@ -163,16 +163,34 @@ namespace BAIProto
                 cube.Turn(3);
                 Thread.Sleep(100);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            {
+                cube.Turn(4);
+                Thread.Sleep(100);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            {
+                cube.Turn(5);
+                Thread.Sleep(100);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D6))
+            {
+                cube.Turn(6);
+                Thread.Sleep(100);
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
                 Thread.Sleep(1000);
-                for (int i = 0; i < 4; i++) //solving the cross
-                {
+                //for (int i = 0; i < 4; i++) //solving the cross
+                //{
+                    cube.UpdateCube(gameTime);
                     targetfront = cube.solvedcube[0][1, 0];
                     targettop = cube.solvedcube[2][1, 2];
-
+                    //solvingstep += targetfront;
                     //piece on top  file cases
-                    if (cube.wholecube[0][1, 0] == targettop && cube.wholecube[2][1, 2] == targetfront)
+                    if (cube.wholecube[2][1, 2] == targettop && cube.wholecube[0][1, 0] == targetfront)
+                        solvingstep += " ";
+                    else if (cube.wholecube[0][1, 0] == targettop && cube.wholecube[2][1, 2] == targetfront)
                         solvingstep += " 6 2 4 5";  // dont need brackets as only one line, looks more tidy 
                     else if (cube.wholecube[4][1, 0] == targettop && cube.wholecube[2][2, 1] == targetfront)
                         solvingstep += " 1 3";
@@ -182,7 +200,7 @@ namespace BAIProto
                         solvingstep += " 7 6";
 
                     else if (cube.wholecube[2][2, 1] == targettop && cube.wholecube[4][1, 0] == targetfront)
-                        solvingstep += " 5 3 2 6";
+                        solvingstep += " 5 3 2 6";/////////////////////
                     else if (cube.wholecube[2][1, 0] == targettop && cube.wholecube[1][1, 0] == targetfront)
                         solvingstep += " 5 5 3 2 2";
                     else if (cube.wholecube[2][0, 1] == targettop && cube.wholecube[5][1, 0] == targetfront)
@@ -194,15 +212,15 @@ namespace BAIProto
                     else if (cube.wholecube[5][2, 1] == targettop && cube.wholecube[0][0, 1] == targetfront)
                         solvingstep += " 6";
                     else if (cube.wholecube[0][2, 1] == targettop && cube.wholecube[4][0, 1] == targetfront)
-                        solvingstep += " 2 4 5";
+                        solvingstep += " 2 4 5";////
                     else if (cube.wholecube[1][0, 1] == targettop && cube.wholecube[4][2, 1] == targetfront)
                         solvingstep += " 2 1 5";
                     else if (cube.wholecube[4][2, 1] == targettop && cube.wholecube[1][0, 1] == targetfront)
                         solvingstep += " 1 1 3 1 1";
                     else if (cube.wholecube[5][0, 1] == targettop && cube.wholecube[1][2, 1] == targetfront)
                         solvingstep += " 1 1 6 1 1";
-                    else if (cube.wholecube[0][2, 1] == targettop && cube.wholecube[5][0, 1] == targetfront)
-                        solvingstep += " 5 7 2";
+                    else if (cube.wholecube[1][2, 1] == targettop && cube.wholecube[5][0, 1] == targetfront)
+                        solvingstep += " 5 7 2";////
                     else if (cube.wholecube[0][0, 1] == targettop && cube.wholecube[5][2, 1] == targetfront)
                         solvingstep += " 5 8 2";
 
@@ -224,27 +242,28 @@ namespace BAIProto
                     else if (cube.wholecube[5][2, 1] == targettop && cube.wholecube[3][0, 1] == targetfront)
                         solvingstep += " 8 6 7";
 
+                //solved
+                //if (cube.wholecube[2][1, 2] == targettop && cube.wholecube[0][1, 0] == targetfront)
+                //{
+                //    if (i != 3)
+                //        cube.XTurn();
+                //    else
+                //    {
+                //        //   
+                //    }
+                //}
 
-                    //solved
-                    if (cube.wholecube[2][1, 2] == targettop && cube.wholecube[0][1, 0] == targetfront)
-                    {
-                        if (i != 3)
-                            cube.XTurn();
-                        else
-                        {
-                            //   
-                        }
-                    }
+                //cube.XTurn();
+
+
+                solvingstep += " x";
+
+
+
                     
-                    //cube.XTurn();
-
-
-
-
-
-                }
+                //   }
                 string[] moves = solvingstep.Split(); // do at the end
-                foreach(string move in moves)
+                foreach (string move in moves)
                 {
                     if (move == "1")
                         cube.Turn(1);
@@ -270,7 +289,10 @@ namespace BAIProto
                         cube.Turn(50);
                     else if (move == "b")
                         cube.Turn(20);
+                    else if (move == "x")
+                        cube.XTurn();
                 }
+                //cube.XTurn();
             }
 
             base.Update(gameTime);
