@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+//using System.Drawing;
 using System.Text;
 using System.Threading;
 
@@ -21,8 +22,10 @@ namespace BAIProto
         private Texture2D tex;
 
         //ai code
-        private Color targetfront, targettop;
-        private string solvingstep = "";
+        private Color targetfront, targettop, targetright;
+        private string solvingstep, displaysolvingstep = "";
+        private string sexymove = "4 5 1 2";
+        private string reversesexymove = " 5 4 2 1";
         private TextManager solvetext = new TextManager();
         private SpriteFont a;
         public Game1()
@@ -99,7 +102,7 @@ namespace BAIProto
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             cube.UpdateCube(gameTime);
-            solvetext.textContent = solvingstep;
+            solvetext.textContent = displaysolvingstep;
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -175,7 +178,7 @@ namespace BAIProto
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D6))
             {
-                cube.Turn(6);
+                cube.YTurn();
                 Thread.Sleep(100);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
@@ -189,7 +192,8 @@ namespace BAIProto
                     //solvingstep += targetfront;
                     //piece on top  file cases
                     if (cube.wholecube[2][1, 2] == targettop && cube.wholecube[0][1, 0] == targetfront)
-                        solvingstep += " ";
+            
+                        solvingstep  += " ";
                     else if (cube.wholecube[0][1, 0] == targettop && cube.wholecube[2][1, 2] == targetfront)
                         solvingstep += " 6 2 4 5";  // dont need brackets as only one line, looks more tidy 
                     else if (cube.wholecube[4][1, 0] == targettop && cube.wholecube[2][2, 1] == targetfront)
@@ -261,7 +265,7 @@ namespace BAIProto
 
 
                     
-                //   }
+                //}
                 string[] moves = solvingstep.Split(); // do at the end
                 foreach (string move in moves)
                 {
@@ -292,10 +296,36 @@ namespace BAIProto
                     else if (move == "x")
                         cube.XTurn();
                 }
-                //cube.XTurn();
+                displaysolvingstep += solvingstep;
+                solvingstep = "";
+                
             }
 
-            base.Update(gameTime);
+            ///
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                Thread.Sleep(1000);
+                cube.YTurn();
+                cube.YTurn();
+                cube.UpdateCube(gameTime);
+                targettop = cube.solvedcube[2][0, 2];
+                targetfront = cube.solvedcube[0][2, 0];
+                targetright = cube.solvedcube[4][0, 0];
+                //8 places the piece can be with 3 orientations
+                //front bottom right
+                if (cube.wholecube[4][0, 2] == targettop && cube.wholecube[3][2, 0] == targetfront && cube.wholecube[0][2, 2] == targetright)
+                    solvingstep += sexymove * 2;
+                else if (cube.wholecube[4][0, 2] == targetfront && cube.wholecube[3][2, 0] == targetright && cube.wholecube[0][2, 2] == targettop)
+                    solvingstep += reversesexymove * 2;
+                else if (cube.wholecube[4][0, 2] == targetfront && cube.wholecube[3][2, 0] == targetright && cube.wholecube[0][2, 2] == targettop)
+                    solvingstep += sexymove;
+
+
+
+            }
+
+
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
