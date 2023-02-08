@@ -22,9 +22,9 @@ namespace BAIProto
         private Texture2D tex;
 
         //ai code
-        private Color targetfront, targettop, targetright;
+        private Color targetfront, targetbottom, targetright;
         private string solvingstep, displaysolvingstep = "";
-        private string sexymove = "4 5 1 2";
+        private string sexymove = " 4 5 1 2";
         private string reversesexymove = " 5 4 2 1";
         private TextManager solvetext = new TextManager();
         private SpriteFont a;
@@ -188,62 +188,62 @@ namespace BAIProto
                 //{
                     cube.UpdateCube(gameTime);
                     targetfront = cube.solvedcube[0][1, 0];
-                    targettop = cube.solvedcube[2][1, 2];
+                    targetbottom = cube.solvedcube[2][1, 2];
                     //solvingstep += targetfront;
                     //piece on top  file cases
-                    if (cube.wholecube[2][1, 2] == targettop && cube.wholecube[0][1, 0] == targetfront)
+                    if (cube.wholecube[2][1, 2] == targetbottom && cube.wholecube[0][1, 0] == targetfront)
             
                         solvingstep  += " ";
-                    else if (cube.wholecube[0][1, 0] == targettop && cube.wholecube[2][1, 2] == targetfront)
+                    else if (cube.wholecube[0][1, 0] == targetbottom && cube.wholecube[2][1, 2] == targetfront)
                         solvingstep += " 6 2 4 5";  // dont need brackets as only one line, looks more tidy 
-                    else if (cube.wholecube[4][1, 0] == targettop && cube.wholecube[2][2, 1] == targetfront)
+                    else if (cube.wholecube[4][1, 0] == targetbottom && cube.wholecube[2][2, 1] == targetfront)
                         solvingstep += " 1 3";
-                    else if (cube.wholecube[1][1, 0] == targettop && cube.wholecube[2][1, 0] == targetfront)
+                    else if (cube.wholecube[1][1, 0] == targetbottom && cube.wholecube[2][1, 0] == targetfront)
                         solvingstep += " 5 1 2 3";
-                    else if (cube.wholecube[5][1, 0] == targettop && cube.wholecube[2][0, 1] == targetfront)
+                    else if (cube.wholecube[5][1, 0] == targetbottom && cube.wholecube[2][0, 1] == targetfront)
                         solvingstep += " 7 6";
 
-                    else if (cube.wholecube[2][2, 1] == targettop && cube.wholecube[4][1, 0] == targetfront)
+                    else if (cube.wholecube[2][2, 1] == targetbottom && cube.wholecube[4][1, 0] == targetfront)
                         solvingstep += " 5 3 2 6";/////////////////////
-                    else if (cube.wholecube[2][1, 0] == targettop && cube.wholecube[1][1, 0] == targetfront)
+                    else if (cube.wholecube[2][1, 0] == targetbottom && cube.wholecube[1][1, 0] == targetfront)
                         solvingstep += " 5 5 3 2 2";
-                    else if (cube.wholecube[2][0, 1] == targettop && cube.wholecube[5][1, 0] == targetfront)
+                    else if (cube.wholecube[2][0, 1] == targetbottom && cube.wholecube[5][1, 0] == targetfront)
                         solvingstep += " 2 3 5 6";
 
                     // pieces on middle file
-                    else if (cube.wholecube[4][0, 1] == targettop && cube.wholecube[0][2, 1] == targetfront)
+                    else if (cube.wholecube[4][0, 1] == targetbottom && cube.wholecube[0][2, 1] == targetfront)
                         solvingstep += " 3";
-                    else if (cube.wholecube[5][2, 1] == targettop && cube.wholecube[0][0, 1] == targetfront)
+                    else if (cube.wholecube[5][2, 1] == targetbottom && cube.wholecube[0][0, 1] == targetfront)
                         solvingstep += " 6";
-                    else if (cube.wholecube[0][2, 1] == targettop && cube.wholecube[4][0, 1] == targetfront)
+                    else if (cube.wholecube[0][2, 1] == targetbottom && cube.wholecube[4][0, 1] == targetfront)
                         solvingstep += " 2 4 5";////
-                    else if (cube.wholecube[1][0, 1] == targettop && cube.wholecube[4][2, 1] == targetfront)
+                    else if (cube.wholecube[1][0, 1] == targetbottom && cube.wholecube[4][2, 1] == targetfront)
                         solvingstep += " 2 1 5";
-                    else if (cube.wholecube[4][2, 1] == targettop && cube.wholecube[1][0, 1] == targetfront)
+                    else if (cube.wholecube[4][2, 1] == targetbottom && cube.wholecube[1][0, 1] == targetfront)
                         solvingstep += " 1 1 3 1 1";
-                    else if (cube.wholecube[5][0, 1] == targettop && cube.wholecube[1][2, 1] == targetfront)
+                    else if (cube.wholecube[5][0, 1] == targetbottom && cube.wholecube[1][2, 1] == targetfront)
                         solvingstep += " 1 1 6 1 1";
-                    else if (cube.wholecube[1][2, 1] == targettop && cube.wholecube[5][0, 1] == targetfront)
+                    else if (cube.wholecube[1][2, 1] == targetbottom && cube.wholecube[5][0, 1] == targetfront)
                         solvingstep += " 5 7 2";////
-                    else if (cube.wholecube[0][0, 1] == targettop && cube.wholecube[5][2, 1] == targetfront)
+                    else if (cube.wholecube[0][0, 1] == targetbottom && cube.wholecube[5][2, 1] == targetfront)
                         solvingstep += " 5 8 2";
 
                     // pieces on 3rd file
-                    else if (cube.wholecube[3][1, 0] == targettop && cube.wholecube[0][1, 2] == targetfront)
+                    else if (cube.wholecube[3][1, 0] == targetbottom && cube.wholecube[0][1, 2] == targetfront)
                         solvingstep += " 6 6";
-                    else if (cube.wholecube[0][1, 2] == targettop && cube.wholecube[3][1, 0] == targetfront)
+                    else if (cube.wholecube[0][1, 2] == targetbottom && cube.wholecube[3][1, 0] == targetfront)
                         solvingstep += " 3 2 4 5";
-                    else if (cube.wholecube[3][2, 1] == targettop && cube.wholecube[4][1, 2] == targetfront)
+                    else if (cube.wholecube[3][2, 1] == targetbottom && cube.wholecube[4][1, 2] == targetfront)
                         solvingstep += " a 6 6";// a = 50
-                    else if (cube.wholecube[4][1, 2] == targettop && cube.wholecube[3][2, 1] == targetfront)
+                    else if (cube.wholecube[4][1, 2] == targetbottom && cube.wholecube[3][2, 1] == targetfront)
                         solvingstep += " 4 3 1";
-                    else if (cube.wholecube[3][1, 2] == targettop && cube.wholecube[1][1, 2] == targetfront)
+                    else if (cube.wholecube[3][1, 2] == targetbottom && cube.wholecube[1][1, 2] == targetfront)
                         solvingstep += " a a 6 6";
-                    else if (cube.wholecube[1][1, 2] == targettop && cube.wholecube[3][1, 2] == targetfront)
+                    else if (cube.wholecube[1][1, 2] == targetbottom && cube.wholecube[3][1, 2] == targetfront)
                         solvingstep += " a 4 3 1";
-                    else if (cube.wholecube[3][0, 1] == targettop && cube.wholecube[5][2, 1] == targetfront)
+                    else if (cube.wholecube[3][0, 1] == targetbottom && cube.wholecube[5][2, 1] == targetfront)
                         solvingstep += " b 6 6";// b = 20
-                    else if (cube.wholecube[5][2, 1] == targettop && cube.wholecube[3][0, 1] == targetfront)
+                    else if (cube.wholecube[5][2, 1] == targetbottom && cube.wholecube[3][0, 1] == targetfront)
                         solvingstep += " 8 6 7";
 
                 //solved
@@ -308,19 +308,56 @@ namespace BAIProto
                 cube.YTurn();
                 cube.YTurn();
                 cube.UpdateCube(gameTime);
-                targettop = cube.solvedcube[2][0, 2];
-                targetfront = cube.solvedcube[0][2, 0];
-                targetright = cube.solvedcube[4][0, 0];
+                targetbottom = cube.solvedcube[3][2, 0];
+                targetfront = cube.solvedcube[0][2, 2];
+                targetright = cube.solvedcube[4][0, 2];
                 //8 places the piece can be with 3 orientations
                 //front bottom right
-                if (cube.wholecube[4][0, 2] == targettop && cube.wholecube[3][2, 0] == targetfront && cube.wholecube[0][2, 2] == targetright)
-                    solvingstep += sexymove * 2;
-                else if (cube.wholecube[4][0, 2] == targetfront && cube.wholecube[3][2, 0] == targetright && cube.wholecube[0][2, 2] == targettop)
-                    solvingstep += reversesexymove * 2;
-                else if (cube.wholecube[4][0, 2] == targetfront && cube.wholecube[3][2, 0] == targetright && cube.wholecube[0][2, 2] == targettop)
+                if (cube.wholecube[4][0, 2] == targetbottom && cube.wholecube[3][2, 0] == targetfront && cube.wholecube[0][2, 2] == targetright)
+                    solvingstep += sexymove + sexymove;
+                else if (cube.wholecube[4][0, 2] == targetfront && cube.wholecube[3][2, 0] == targetright && cube.wholecube[0][2, 2] == targetbottom)
+                    solvingstep += reversesexymove + reversesexymove;
+                else if (cube.wholecube[4][0, 2] == targetright && cube.wholecube[3][2, 0] == targetbottom && cube.wholecube[0][2, 2] == targetfront)
+                    solvingstep += " ";//solved
+                //front top right
+                else if (cube.wholecube[0][2, 0] == targetbottom && cube.wholecube[2][2, 2] == targetfront && cube.wholecube[4][0, 0] == targetright)
+                    solvingstep += reversesexymove;
+                else if (cube.wholecube[0][2, 0] == targetright && cube.wholecube[2][2, 2] == targetbottom && cube.wholecube[4][0, 0] == targetfront)
+                    solvingstep += sexymove + sexymove + sexymove;
+                else if (cube.wholecube[0][2, 0] == targetfront && cube.wholecube[2][2, 2] == targetright && cube.wholecube[4][0, 0] == targetbottom)
                     solvingstep += sexymove;
+                //front bottom left
+                else if (cube.wholecube[0][0, 2] == targetbottom && cube.wholecube[5][2, 2] == targetright && cube.wholecube[3][0, 0] == targetfront)
+                    solvingstep += " 6 2 2 6 6 5 6";
+                else if (cube.wholecube[0][0, 2] == targetright && cube.wholecube[5][2, 2] == targetfront && cube.wholecube[3][0, 0] == targetbottom)
+                    solvingstep += " 8 2 1 4 5 1";
+                else if (cube.wholecube[0][0, 2] == targetfront && cube.wholecube[5][2, 2] == targetbottom && cube.wholecube[3][0, 0] == targetright)
+                    solvingstep += " 8 2 1" + reversesexymove;
+                //front top left
+                else if (cube.wholecube[0][0, 0] == targetright && cube.wholecube[5][2, 0] == targetbottom && cube.wholecube[2][0, 2] == targetfront)
+                    solvingstep += " 4 2 1";
+                else if (cube.wholecube[0][0, 0] == targetbottom && cube.wholecube[5][2, 0] == targetfront && cube.wholecube[2][0, 2] == targetright)
+                    solvingstep += " 2" + sexymove;
+                else if (cube.wholecube[0][0, 0] == targetfront && cube.wholecube[5][2, 0] == targetright && cube.wholecube[2][0, 2] == targetbottom)
+                    solvingstep += " 2"+ sexymove + sexymove+ sexymove;
 
-
+                //back bottom right f(from front perspective)
+                else if (cube.wholecube[3][2, 2] == targetbottom && cube.wholecube[4][2, 2] == targetfront && cube.wholecube[1][0, 2] == targetright)
+                    solvingstep += " 1 5 4 5" + reversesexymove;
+                else if (cube.wholecube[3][2, 2] == targetfront && cube.wholecube[4][2, 2] == targetright && cube.wholecube[1][0, 2] == targetbottom)
+                    solvingstep += " 1 5 4 5" + sexymove;
+                else if (cube.wholecube[3][2, 2] == targetright && cube.wholecube[4][2, 2] == targetbottom && cube.wholecube[1][0, 2] == targetfront)
+                    solvingstep += " 1 2 4 5 5" + reversesexymove;
+                //back top right f(from front perspective)
+                else if (cube.wholecube[0][2, 0] == targetbottom && cube.wholecube[1][0, 0] == targetfront && cube.wholecube[4][2, 0] == targetright)
+                    solvingstep += " 1 5 4 4 2 1";
+                else if (cube.wholecube[0][2, 0] == targetfront && cube.wholecube[1][0, 0] == targetright && cube.wholecube[4][2, 0] == targetbottom)
+                    solvingstep += " 5"+ reversesexymove;
+                else if (cube.wholecube[0][2, 0] == targetright && cube.wholecube[1][0, 0] == targetbottom && cube.wholecube[4][2, 0] == targetfront)
+                    solvingstep += " 5"+ sexymove;
+                //back bottom left
+                else if (cube.wholecube[3][0, 2] == targetbottom && cube.wholecube[1][2, 2] == targetfront && cube.wholecube[5][0, 2] == targetright)
+                    solvingstep += " 7 2 2 8"+ reversesexymove;
 
             }
 
