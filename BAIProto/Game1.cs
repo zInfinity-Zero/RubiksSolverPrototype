@@ -24,8 +24,10 @@ namespace BAIProto
         //ai code
         private Color targetfront, targetbottom, targetright;
         private string solvingstep, displaysolvingstep = "";
-        private string sexymove = " 4 5 1 2";
+        private string sexymove = " 4 5 1 2";// common algorithms
         private string reversesexymove = " 5 4 2 1";
+        private string sledgehammer = " 1 6 4 3";
+        private string reveresesledgehammer = " 6 1 3 4";
         private TextManager solvetext = new TextManager();
         private SpriteFont a;
         public Game1()
@@ -222,7 +224,7 @@ namespace BAIProto
                     else if (cube.wholecube[4][2, 1] == targetbottom && cube.wholecube[1][0, 1] == targetfront)
                         solvingstep += " 1 1 3 1 1";
                     else if (cube.wholecube[5][0, 1] == targetbottom && cube.wholecube[1][2, 1] == targetfront)
-                        solvingstep += " 1 1 6 1 1";
+                        solvingstep += " 7 7 6 7 7";
                     else if (cube.wholecube[1][2, 1] == targetbottom && cube.wholecube[5][0, 1] == targetfront)
                         solvingstep += " 5 7 2";////
                     else if (cube.wholecube[0][0, 1] == targetbottom && cube.wholecube[5][2, 1] == targetfront)
@@ -267,7 +269,7 @@ namespace BAIProto
                     
                 //}
                 string[] moves = solvingstep.Split(); // do at the end
-                foreach (string move in moves)
+                foreach (string move in moves)//create a function for this in real project
                 {
                     if (move == "1")
                         cube.Turn(1);
@@ -305,8 +307,11 @@ namespace BAIProto
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 Thread.Sleep(1000);
-                cube.YTurn();
-                cube.YTurn();
+                if (cube.wholecube[2][1, 1] != Color.Yellow)
+                {
+                    cube.YTurn();
+                    cube.YTurn();
+                }
                 cube.UpdateCube(gameTime);
                 targetbottom = cube.solvedcube[3][2, 0];
                 targetfront = cube.solvedcube[0][2, 2];
@@ -358,10 +363,157 @@ namespace BAIProto
                 //back bottom left
                 else if (cube.wholecube[3][0, 2] == targetbottom && cube.wholecube[1][2, 2] == targetfront && cube.wholecube[5][0, 2] == targetright)
                     solvingstep += " 7 2 2 8"+ reversesexymove;
+                else if (cube.wholecube[3][0, 2] == targetright && cube.wholecube[1][2, 2] == targetbottom && cube.wholecube[5][0, 2] == targetfront)
+                    solvingstep += " 7 2 8 2 2" + reversesexymove;
+                else if (cube.wholecube[3][0, 2] == targetfront && cube.wholecube[1][2, 2] == targetright && cube.wholecube[5][0, 2] == targetbottom)
+                    solvingstep += " 7 2 2 8" + sexymove;
+                //back top left 
+                else if (cube.wholecube[2][0, 0] == targetbottom && cube.wholecube[5][0, 0] == targetfront && cube.wholecube[1][2, 0] == targetright)
+                    solvingstep += " 5 5" + sexymove + sexymove + sexymove;
+                else if (cube.wholecube[2][0, 0] == targetright && cube.wholecube[5][0, 0] == targetbottom && cube.wholecube[1][2, 0] == targetfront)
+                    solvingstep += " 5 5" + sexymove ;
+                else if (cube.wholecube[2][0, 0] == targetfront && cube.wholecube[5][0, 0] == targetright && cube.wholecube[1][2, 0] == targetbottom)
+                    solvingstep += " 5 5" + reversesexymove ;
+                //back bottom right 
+                else if (cube.wholecube[3][2, 2] == targetbottom && cube.wholecube[4][2, 2] == targetfront && cube.wholecube[1][0, 2] == targetright)
+                    solvingstep += " 1 5 4 5" + reversesexymove;
+                else if (cube.wholecube[3][2, 2] == targetright && cube.wholecube[4][2, 2] == targetbottom && cube.wholecube[1][0, 2] == targetfront)
+                    solvingstep += " 1 5 5 4 2" + reversesexymove;
+                else if (cube.wholecube[3][2, 2] == targetfront && cube.wholecube[4][2, 2] == targetright && cube.wholecube[1][0, 2] == targetbottom)
+                    solvingstep += " 1 5 4 5" + sexymove;
+                //back top right 
+                else if (cube.wholecube[2][2, 0] == targetbottom && cube.wholecube[1][0, 0] == targetfront && cube.wholecube[4][2, 0] == targetright)
+                    solvingstep += " 5" + reversesexymove + reversesexymove + reversesexymove;
+                else if (cube.wholecube[2][2, 0] == targetfront && cube.wholecube[1][0, 0] == targetright && cube.wholecube[4][2, 0] == targetbottom)
+                    solvingstep += " 5"  + reversesexymove;
+                else if (cube.wholecube[2][2, 0] == targetright && cube.wholecube[1][0, 0] == targetbottom && cube.wholecube[4][2, 0] == targetfront)
+                    solvingstep += " 5" + sexymove;
 
+
+
+                solvingstep += " x";
+
+                string[] moves = solvingstep.Split(); // do at the end
+                foreach (string move in moves)//create a function for this in real project
+                {
+                    if (move == "1")
+                        cube.Turn(1);
+                    else if (move == "2")
+                        cube.Turn(2);
+                    else if (move == "3")
+                        cube.Turn(3);
+                    else if (move == "4")
+                        cube.Turn(4);
+                    else if (move == "5")
+                        cube.Turn(5);
+                    else if (move == "6")
+                        cube.Turn(6);
+                    else if (move == "7")
+                        cube.Turn(7);
+                    else if (move == "8")
+                        cube.Turn(8);
+                    else if (move == "9")
+                        cube.Turn(9);
+                    else if (move == "0")
+                        cube.Turn(0);
+                    else if (move == "a")
+                        cube.Turn(50);
+                    else if (move == "b")
+                        cube.Turn(20);
+                    else if (move == "x")
+                        cube.XTurn();
+                }
+                displaysolvingstep += solvingstep;
+                solvingstep = "";
             }
 
+            ///
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            {//8 places the edge can be with 2 orientations for each of the 8
+                Thread.Sleep(1000);
+                cube.UpdateCube(gameTime);
+                targetfront = cube.solvedcube[0][2, 1];
+                targetright = cube.solvedcube[4][0, 1];
 
+                //edge at front face  
+                if (cube.wholecube[0][1, 0] == targetfront && cube.wholecube[2][1, 2] == targetright)
+                    solvingstep += sexymove + " 3 2 6";
+                else if (cube.wholecube[0][1, 0] == targetright && cube.wholecube[2][1, 2] == targetfront)
+                    solvingstep += " 5 5 3 2 6 5" + sexymove;
+
+                else if (cube.wholecube[0][2, 1] == targetfront && cube.wholecube[4][0, 1] == targetright)
+                    solvingstep += " ";
+                else if (cube.wholecube[0][2, 1] == targetright && cube.wholecube[4][0, 1] == targetfront)
+                    solvingstep += " 4 2 1 5 3 5 5 6 2" + reveresesledgehammer;
+
+                else if (cube.wholecube[0][0, 1] == targetfront && cube.wholecube[5][2, 1] == targetright)
+                    solvingstep += sexymove + " a 6 5 3 b 3 2 6";
+                else if (cube.wholecube[0][0, 1] == targetfront && cube.wholecube[5][2, 1] == targetright)
+                    solvingstep += " a 8 2 7 b" + reveresesledgehammer;
+
+                //edge at back face
+                else if (cube.wholecube[1][0, 1] == targetfront && cube.wholecube[4][2, 1] == targetright)
+                    solvingstep += " 1 5 4 5 5 3 2 6 5" + sexymove;
+                else if (cube.wholecube[1][0, 1] == targetright && cube.wholecube[4][2, 1] == targetfront)
+                    solvingstep += " b 1 2 4 a 5 5" + reveresesledgehammer;
+
+                else if (cube.wholecube[1][1, 0] == targetfront && cube.wholecube[2][1, 0] == targetright)
+                    solvingstep += " 2" + sexymove + " 3 2 6";
+                else if (cube.wholecube[1][1, 0] == targetright && cube.wholecube[2][1, 0] == targetfront)
+                    solvingstep += sledgehammer + sexymove;
+
+                else if (cube.wholecube[1][2, 1] == targetfront && cube.wholecube[5][0, 1] == targetright)
+                    solvingstep += " a a 7 5 8 a a 5" + sledgehammer;
+                else if (cube.wholecube[1][2, 1] == targetright && cube.wholecube[5][0, 1] == targetfront)
+                    solvingstep += sexymove +" a a 7 2 8 a a 5 3 2 6";
+
+                //othersssssssssssssssss
+                else if (cube.wholecube[4][1, 0] == targetright && cube.wholecube[2][2, 1] == targetfront)
+                    solvingstep += " 2 3 2 6 5" + sexymove;
+                else if (cube.wholecube[4][1, 0] == targetfront && cube.wholecube[2][2, 1] == targetright)
+                    solvingstep += " 5 5" + sexymove + " 3 2 6";
+
+                else if (cube.wholecube[5][1, 0] == targetright && cube.wholecube[2][0, 1] == targetfront)
+                    solvingstep += " 5 3 2 6 5" + sexymove;
+                else if (cube.wholecube[5][1, 0] == targetfront && cube.wholecube[2][0, 1] == targetright)
+                    solvingstep += sexymove + " 3 2 6";
+
+                solvingstep += " x";
+
+                string[] moves = solvingstep.Split(); // do at the end
+                foreach (string move in moves)//create a function for this in real project
+                {
+                    if (move == "1")
+                        cube.Turn(1);
+                    else if (move == "2")
+                        cube.Turn(2);
+                    else if (move == "3")
+                        cube.Turn(3);
+                    else if (move == "4")
+                        cube.Turn(4);
+                    else if (move == "5")
+                        cube.Turn(5);
+                    else if (move == "6")
+                        cube.Turn(6);
+                    else if (move == "7")
+                        cube.Turn(7);
+                    else if (move == "8")
+                        cube.Turn(8);
+                    else if (move == "9")
+                        cube.Turn(9);
+                    else if (move == "0")
+                        cube.Turn(0);
+                    else if (move == "a")
+                        cube.Turn(50);
+                    else if (move == "b")
+                        cube.Turn(20);
+                    else if (move == "x")
+                        cube.XTurn();
+                }
+                displaysolvingstep += solvingstep;
+                solvingstep = "";
+
+            }
                 base.Update(gameTime);
         }
 
