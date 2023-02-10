@@ -173,13 +173,14 @@ namespace BAIProto
             Color a = cubeorientationback[0, 2];
             Color b = cubeorientationback[1, 2];
             Color c = cubeorientationback[2, 2];
+            Color d = cubeorientationback[0, 1];
             back = this.cubeorientationback;
             this.cubeorientationback[0, 1] = back[2, 1];
             this.cubeorientationback[1, 1] = back[1, 1];
-            this.cubeorientationback[2, 1] = back[0, 1];
+            this.cubeorientationback[2, 1] = d;
             this.cubeorientationback[2, 2] = back[0, 0];
             this.cubeorientationback[1, 2] = back[1, 0];
-            this.cubeorientationback[0, 2] = back[2, 0];//alteration as cant do cubeorientationback = down
+            this.cubeorientationback[0, 2] = back[2, 0];
             this.cubeorientationback[2, 0] = a;
             this.cubeorientationback[1, 0] = b;
             this.cubeorientationback[0, 0] = c;
@@ -187,10 +188,11 @@ namespace BAIProto
             a = cubeorientationdown[0, 2];
             b = cubeorientationdown[1, 2];
             c = cubeorientationdown[2, 2];
+            d = cubeorientationdown[0,1];
             down = this.cubeorientationdown;
             this.cubeorientationdown[0, 1] = down[2, 1];
             this.cubeorientationdown[1, 1] = down[1, 1];
-            this.cubeorientationdown[2, 1] = down[0, 1];
+            this.cubeorientationdown[2, 1] = d;
             this.cubeorientationdown[2, 2] = down[0, 0];
             this.cubeorientationdown[1, 2] = down[1, 0];
             this.cubeorientationdown[0, 2] = down[2, 0];//alteration 
@@ -203,7 +205,7 @@ namespace BAIProto
 
 
 
-            Color d = cubeorientationright[2, 0];
+            d = cubeorientationright[2, 0];
             Color e = cubeorientationright[0, 0];
             Color f = cubeorientationright[1, 0];//right face 4 turn
             cubeorientationright[0, 0] = temprFace[0, 2];
@@ -255,10 +257,11 @@ namespace BAIProto
              a = solvedcube[1][0, 2];
              b = solvedcube[1][1, 2];
              c = solvedcube[1][2, 2];
+            d = solvedcube[1][0, 1];
             back = solvedcube[1];
             solvedcube[1][0, 1] = back[2, 1];
             solvedcube[1][1, 1] = back[1, 1];
-            solvedcube[1][2, 1] = back[0, 1];
+            solvedcube[1][2, 1] = d;
             solvedcube[1][2, 2] = back[0, 0];
             solvedcube[1][1, 2] = back[1, 0];
             solvedcube[1][0, 2] = back[2, 0];
@@ -269,10 +272,11 @@ namespace BAIProto
             a = solvedcube[3][0, 2];
             b = solvedcube[3][1, 2];
             c = solvedcube[3][2, 2];
+            d = solvedcube[3][0, 1];
             down = this.solvedcube[3];
             solvedcube[3][0, 1] = down[2, 1];
             solvedcube[3][1, 1] = down[1, 1];
-            solvedcube[3][2, 1] = down[0, 1];
+            solvedcube[3][2, 1] = d;
             solvedcube[3][2, 2] = down[0, 0];
             solvedcube[3][1, 2] = down[1, 0];
             solvedcube[3][0, 2] = down[2, 0];
