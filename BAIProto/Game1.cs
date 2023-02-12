@@ -616,7 +616,7 @@ namespace BAIProto
                 int i = 0;
                 foreach (Color c in cube.cubeorientationup)
                 {
-                    if (c == targetfront )
+                    if (c == targetfront)
                     {
                         top[i] = 1;
                     }
@@ -625,6 +625,8 @@ namespace BAIProto
                         top[i] = 0;
                     }
                     i += 1;
+
+                }
 
                     if (top.SequenceEqual(new int[] { 0, 1, 0, 1, 1, 1, 0, 1, 0 }))//cross shape
                     {
@@ -636,21 +638,207 @@ namespace BAIProto
                             solvingstep += " 5";
                     }
 
-                    
-                    else if (top.SequenceEqual(new int[] { 0, 1, 1, 1, 1, 1, 0, 1, 0 }))
+
+                    else if (top.SequenceEqual(new int[] { 0, 1, 1, 1, 1, 1, 0, 1, 0 }))//sune shape
                     {
-                        if (cube.cubeorientationleft)
+                        if (cube.cubeorientationleft[0, 0] != targetfront)//sune
+                            solvingstep += " 4 5 1 5 4 2 2 1";
+                        else if (cube.cubeorientationleft[0, 0] == targetfront)///anti sune
+                            solvingstep += " 5 1 2 4 2 1 5 5 4";
+
                     }
 
+                    else if (top.SequenceEqual(new int[] { 1, 1, 0, 1, 1, 1, 0, 1, 1 }))//double sune shape
+                    {
+                        if (cube.cubeorientationfront[0, 0] == targetfront)
+                            solvingstep += " y 1 5 4 a 1 2 4 b y y y";
+                        else
+                            solvingstep += " 5";
+
+                    }
+
+                    else if (top.SequenceEqual(new int[] { 0, 1, 0, 1, 1, 1, 1, 1, 1 }))//headlight
+                        solvingstep += " y 7 5 1 2 8 5 4 2 y y y";
+
+                    else
+                        solvingstep += " 5";
+
+                string[] moves = solvingstep.Split(); // do at the end
+                foreach (string move in moves)//create a function for this in real project
+                {
+                    if (move == "1")
+                        cube.Turn(1);
+                    else if (move == "2")
+                        cube.Turn(2);
+                    else if (move == "3")
+                        cube.Turn(3);
+                    else if (move == "4")
+                        cube.Turn(4);
+                    else if (move == "5")
+                        cube.Turn(5);
+                    else if (move == "6")
+                        cube.Turn(6);
+                    else if (move == "7")
+                        cube.Turn(7);
+                    else if (move == "8")
+                        cube.Turn(8);
+                    else if (move == "9")
+                        cube.Turn(9);
+                    else if (move == "0")
+                        cube.Turn(0);
+                    else if (move == "a")
+                        cube.Turn(50);
+                    else if (move == "b")
+                        cube.Turn(20);
+                    else if (move == "x")
+                        cube.XTurn();
+                    else if (move == "y")
+                        cube.YTurn();
                 }
+                displaysolvingstep += solvingstep;
+                solvingstep = "";
 
 
             }
 
 
 
+            if (Keyboard.GetState().IsKeyDown(Keys.U))
+            {//solve yellow face - 4 cases with one being solved
+                solvingstep = "";
+                Thread.Sleep(1000);
+                if (ContainHeadlight(cube.cubeorientationleft) || ContainHeadlight(cube.cubeorientationright) || ContainHeadlight(cube.cubeorientationfront) || ContainHeadlight(cube.cubeorientationback))
+                {
+                    if(ContainHeadlight(cube.cubeorientationleft) && !ContainBlock(cube.cubeorientationright) &&!ContainBlock(cube.cubeorientationfront) && !ContainBlock(cube.cubeorientationback) &&!ContainBlock(cube.cubeorientationleft))
+                
+                        solvingstep += " 6 1 6 7 7 3 4 6 7 7 6 6";
+                    else if (ContainBlock(cube.cubeorientationleft) && !ContainHeadlight(cube.cubeorientationfront))
+                        solvingstep += " 6 1 6 7 7 3 4 6 7 7 6 6";
 
-                base.Update(gameTime);
+                    else if (ContainHeadlight(cube.cubeorientationleft) && ContainBlock(cube.cubeorientationback))
+                
+                        solvingstep += " 0 0 2 0 2 2 9 2 0 0";
+                  
+                    else
+                        solvingstep += " 5";
+
+                }
+                else
+                {
+                    solvingstep += " 6 1 6 7 7 3 4 6 7 7 6 6";
+                }
+
+
+
+                string[] moves = solvingstep.Split(); // do at the end
+                foreach (string move in moves)//create a function for this in real project
+                {
+                    if (move == "1")
+                        cube.Turn(1);
+                    else if (move == "2")
+                        cube.Turn(2);
+                    else if (move == "3")
+                        cube.Turn(3);
+                    else if (move == "4")
+                        cube.Turn(4);
+                    else if (move == "5")
+                        cube.Turn(5);
+                    else if (move == "6")
+                        cube.Turn(6);
+                    else if (move == "7")
+                        cube.Turn(7);
+                    else if (move == "8")
+                        cube.Turn(8);
+                    else if (move == "9")
+                        cube.Turn(9);
+                    else if (move == "0")
+                        cube.Turn(0);
+                    else if (move == "a")
+                        cube.Turn(50);
+                    else if (move == "b")
+                        cube.Turn(20);
+                    else if (move == "x")
+                        cube.XTurn();
+                    else if (move == "y")
+                        cube.YTurn();
+                }
+                displaysolvingstep += solvingstep;
+                solvingstep = "";
+
+
+
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.I))
+            {
+                if (cube.cubeorientationfront[1, 0] != cube.cubeorientationfront[1, 1])
+                {
+
+                    solvingstep += " 5";
+
+                }
+                else
+                {
+                    solvingstep += " ";
+                }
+
+
+                    string[] moves = solvingstep.Split(); // do at the end
+                    foreach (string move in moves)//create a function for this in real project
+                    {
+                        if (move == "1")
+                            cube.Turn(1);
+                        else if (move == "2")
+                            cube.Turn(2);
+                        else if (move == "3")
+                            cube.Turn(3);
+                        else if (move == "4")
+                            cube.Turn(4);
+                        else if (move == "5")
+                            cube.Turn(5);
+                        else if (move == "6")
+                            cube.Turn(6);
+                        else if (move == "7")
+                            cube.Turn(7);
+                        else if (move == "8")
+                            cube.Turn(8);
+                        else if (move == "9")
+                            cube.Turn(9);
+                        else if (move == "0")
+                            cube.Turn(0);
+                        else if (move == "a")
+                            cube.Turn(50);
+                        else if (move == "b")
+                            cube.Turn(20);
+                        else if (move == "x")
+                            cube.XTurn();
+                        else if (move == "y")
+                            cube.YTurn();
+                    }
+                    displaysolvingstep += solvingstep;
+                    solvingstep = "";
+
+                
+            }
+
+
+
+
+
+            base.Update(gameTime);
+        }
+        public bool ContainHeadlight(Color[,] array)
+        {
+            if (array[0, 0] == array[2, 0])
+                return true;
+            else
+                return false;
+        }
+        public bool ContainBlock(Color[,] array)
+        {
+            if (array[0, 0] == array[1, 0] && array[0,0] == array[2,0])
+                return true;
+            else
+                return false;
         }
 
         protected override void Draw(GameTime gameTime)
